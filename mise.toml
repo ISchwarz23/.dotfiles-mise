@@ -1,0 +1,178 @@
+# Mise configuration for bootstrapping this machine from these dotfiles
+
+# =============================================================================
+# SHELL ALIASES (global, via mise activation)
+# These work in both zsh and bash when mise is activated
+# =============================================================================
+[shell_alias]
+ll = "ls -la"
+gca = "git commit --amend"
+gcan = "git commit --amend --no-edit"
+glg = "git lg"
+vi = "nvim"
+gst = "git status"
+gco = "git checkout"
+gcb = "git checkout -b"
+gp = "git push"
+gpl = "git pull"
+gd = "git diff"
+gds = "git diff --staged"
+ga = "git add"
+gaa = "git add -A"
+gcm = "git commit -m"
+gcma = "git commit --amend"
+gcman = "git commit --amend --no-edit"
+grh = "git reset HEAD"
+grhh = "git reset HEAD --hard"
+gstash = "git stash"
+gstashp = "git stash pop"
+glog = "git log --oneline --graph --decorate --all"
+lg = "git lg"
+
+# =============================================================================
+# DOTFILES
+# Each entry: "target" = { source = "relative/path", mode = "symlink|copy|track" }
+# Default mode is "symlink". Default source is same path under dotfiles.root (~/.dotfiles)
+# =============================================================================
+[dotfiles]
+"~/.gitconfig" = { source = "git/.gitconfig", mode = "copy" }
+"~/.gitconfig-general" = { source = "git/.gitconfig-general", mode = "symlink" }
+
+#"~/.config/nvim" = { source = "nvim/.config/nvim" }
+
+"~/.config/opencode/themes/opencode-transparent.json" = { source = "opencode/.config/opencode/themes/opencode-transparent.json" }
+"~/.config/opencode/opencode.jsonc" = { source = "opencode/.config/opencode/opencode.jsonc" }
+
+#"~/.config/tmux/tmux.conf" = { source = "tmux/.config/tmux/tmux.conf" }
+
+# =============================================================================
+# BOOTSTRAP PACKAGES
+# Install system packages via package managers
+# Format: "manager:package" = "version" (latest, or specific version)
+# =============================================================================
+[bootstrap.packages]
+# Core tools - multiple managers, mise uses first available
+# Order: preferred first (pacman for Arch, then apt, dnf, apk, zypper)
+# brew removed - causes permission errors on Linux without Homebrew installed
+"pacman:curl" = "latest"
+"apt:curl" = "latest"
+"dnf:curl" = "latest"
+"apk:curl" = "latest"
+"zypper:curl" = "latest"
+
+"pacman:git" = "latest"
+"apt:git" = "latest"
+"dnf:git" = "latest"
+"apk:git" = "latest"
+"zypper:git" = "latest"
+
+"pacman:jq" = "latest"
+"apt:jq" = "latest"
+"dnf:jq" = "latest"
+"apk:jq" = "latest"
+"zypper:jq" = "latest"
+
+"pacman:neovim" = "latest"
+"apt:neovim" = "latest"
+"dnf:neovim" = "latest"
+"apk:neovim" = "latest"
+"zypper:neovim" = "latest"
+
+"pacman:tmux" = "latest"
+"apt:tmux" = "latest"
+"dnf:tmux" = "latest"
+"apk:tmux" = "latest"
+"zypper:tmux" = "latest"
+
+"pacman:podman" = "latest"
+"apt:podman" = "latest"
+"dnf:podman" = "latest"
+"apk:podman" = "latest"
+"zypper:podman" = "latest"
+
+"pacman:kubectl" = "latest"
+"apt:kubectl" = "latest"
+"dnf:kubernetes-cli" = "latest"
+"apk:kubectl" = "latest"
+"zypper:kubernetes-cli" = "latest"
+
+# AUR packages (Arch only)
+"yay:tmux-xpanes" = "latest"
+
+# opencode - AI coding agent
+"pacman:opencode" = "latest"
+# Note: not in apt/dnf/apk/zypper official repos - use mise tool (mise install opencode)
+
+# =============================================================================
+# BOOTSTRAP REPOS
+# Additional git repositories to clone
+# =============================================================================
+[bootstrap.repos]
+# Tmux Plugin Manager
+"~/.tmux/plugins/tpm" = { url = "https://github.com/tmux-plugins/tpm.git" }
+
+# =============================================================================
+# BOOTSTRAP FILES
+# Files to create/copy with specific permissions (e.g., scripts, configs)
+# =============================================================================
+# No static files needed - x-xpanes and kubectl are downloaded via tasks
+
+# =============================================================================
+# TASKS
+# Custom tasks for complex setup steps (run after packages/files/repos/dotfiles)
+# =============================================================================
+[tasks]
+# Termux (Android) config - run manually on Termux devices
+# Usage: mise run setup-termux
+"setup-termux" = { run = """
+  echo "Setting up Termux config..."
+  mkdir -p ~/.termux
+  ln -sf ~/.dotfiles/termux/.termux/.current_color ~/.termux/.current_color
+  ln -sf ~/.dotfiles/termux/.termux/.current_font ~/.termux/.current_font
+  ln -sf ~/.dotfiles/termux/.termux/colors.properties ~/.termux/colors.properties
+  ln -sf ~/.dotfiles/termux/.termux/font.ttf ~/.termux/font.ttf
+  ln -sf ~/.dotfiles/termux/.termux/termux.properties ~/.termux/termux.properties
+  cp ~/.dotfiles/termux/.termux/toggle-extra-keys.sh ~/.termux/toggle-extra-keys.sh
+  chmod +x ~/.termux/toggle-extra-keys.sh
+  echo "Termux config applied!"
+""" }
+
+# Auto-detect Termux and apply config (optional - add to basic-setup if desired)
+"apply-termux-if-detected" = { run = """
+  if [[ "$OSTYPE" == "linux-android"* ]] || [[ -n "$TERMUX_VERSION" ]]; then
+    echo "Termux detected, applying config..."
+    mise run setup-termux
+  else
+    echo "Not on Termux, skipping"
+  fi
+""" }
+
+# =============================================================================
+# BOOTSTRAP SERVICES
+# Systemd/user services to enable
+# =============================================================================
+[bootstrap.services]
+# Enable dotfiles history watcher (auto-commit changes)
+mise-history = { builtin = "history-watch" }
+
+# =============================================================================
+# BOOTSTRAP SHELL ACTIVATION
+# Adds `eval "$(mise activate zsh)"` to ~/.zshrc and `eval "$(mise activate bash)"` to ~/.bashrc
+# =============================================================================
+[bootstrap.mise_shell_activate]
+zsh = true
+bash = true
+
+# =============================================================================
+# ENVIRONMENT VARIABLES
+# =============================================================================
+[env]
+
+# =============================================================================
+# TOOLS
+# Version managers for development tools (mise will install these)
+# =============================================================================
+[tools]
+"node" = "lts"
+"opencode" = "latest"
+# Python, Go, Rust, etc. can be added here

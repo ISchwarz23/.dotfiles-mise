@@ -1,0 +1,5 @@
+# Main git config - includes shared config
+# Managed by mise dotfiles (copy mode - machine-specific)
+
+[include]
+    path = ~/.gitconfig-general

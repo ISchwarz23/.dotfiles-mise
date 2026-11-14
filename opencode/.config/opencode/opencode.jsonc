@@ -1,0 +1,13 @@
+{
+  "$schema": "https://opencode.ai/config.json",
+  "theme": "opencode-transparent",
+  "plugin": [
+    "github:kevbob1/opencode-mattpocock-skills"
+  ],
+  "pluginOptions": {
+    "github:kevbob1/opencode-mattpocock-skills": {
+      "updateIntervalHours": 12,
+      "exclude": ["in-progress", "misc", "deprecated"]
+    }
+  }
+}
