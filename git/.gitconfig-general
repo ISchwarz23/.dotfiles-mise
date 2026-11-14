@@ -16,9 +16,6 @@
 [fetch]
 	prune = true
 	pruneTags = true
-[remote "origin"]
-	fetch = +refs/heads/*:refs/remotes/origin/*
-	last = log -1 --stat
 [alias]
 	cp = cherry-pick
 	co = checkout
