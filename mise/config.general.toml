@@ -1,6 +1,5 @@
-# Mise runtime configuration — loaded on every host
+# Mise runtime configuration — loaded on every host via include in ~/.config/mise/config.toml
 # This file is symlinked as ~/.config/mise/config.general.toml by bootstrap
-# and included by ~/.config/mise/config.toml
 
 # =============================================================================
 # SHELL ALIASES (global, via mise activation)
@@ -35,7 +34,6 @@ lg = "git lg"
 # ENVIRONMENT VARIABLES
 # =============================================================================
 [env]
-
 
 # =============================================================================
 # TOOLS

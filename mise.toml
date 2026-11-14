@@ -1,6 +1,7 @@
 # Mise bootstrap configuration — used ONLY by `mise bootstrap --from <repo>`
 # This file is NOT loaded as mise runtime config.
 # Runtime config lives in mise/config.general.toml (symlinked to ~/.config/mise/config.general.toml)
+# and mise/tasks.toml (symlinked to ~/tasks.toml)
 
 # =============================================================================
 # DOTFILES
@@ -13,6 +14,7 @@
 
 "~/.config/mise/config.general.toml" = { source = "mise/config.general.toml", mode = "symlink" }
 "~/.config/mise/config.toml" = { source = "mise/config.toml", mode = "copy" }
+"~/tasks.toml" = { source = "mise/tasks.toml", mode = "symlink" }
 
 #"~/.config/nvim" = { source = "nvim/.config/nvim" }
 
@@ -108,34 +110,3 @@ mise-history = { builtin = "history-watch" }
 [bootstrap.mise_shell_activate]
 zsh = true
 bash = true
-
-
-# =============================================================================
-# TASKS
-# Custom tasks for development workflows
-# =============================================================================
-[tasks]
-# Termux (Android) config - run manually on Termux devices
-# Usage: mise run setup-termux
-"setup-termux" = { run = """
-  echo "Setting up Termux config..."
-  mkdir -p ~/.termux
-  ln -sf ~/.dotfiles/termux/.termux/.current_color ~/.termux/.current_color
-  ln -sf ~/.dotfiles/termux/.termux/.current_font ~/.termux/.current_font
-  ln -sf ~/.dotfiles/termux/.termux/colors.properties ~/.termux/colors.properties
-  ln -sf ~/.dotfiles/termux/.termux/font.ttf ~/.termux/font.ttf
-  ln -sf ~/.dotfiles/termux/.termux/termux.properties ~/.termux/termux.properties
-  cp ~/.dotfiles/termux/.termux/toggle-extra-keys.sh ~/.termux/toggle-extra-keys.sh
-  chmod +x ~/.termux/toggle-extra-keys.sh
-  echo "Termux config applied!"
-""" }
-
-# Auto-detect Termux and apply config (optional - add to basic-setup if desired)
-"apply-termux-if-detected" = { run = """
-  if [[ "$OSTYPE" == "linux-android"* ]] || [[ -n "$TERMUX_VERSION" ]]; then
-    echo "Termux detected, applying config..."
-    mise run setup-termux
-  else
-    echo "Not on Termux, skipping"
-  fi
-""" }

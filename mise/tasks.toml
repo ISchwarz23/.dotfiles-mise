@@ -1,0 +1,28 @@
+# Runtime tasks — loaded via task_config.includes in ~/.config/mise/config.toml
+# This file is symlinked as ~/tasks.toml by bootstrap
+# Uses the "task toml file format" - task names as top-level keys (no [tasks.] prefix)
+
+# Termux (Android) config - run manually on Termux devices
+# Usage: mise run setup-termux
+setup-termux = { run = """
+  echo "Setting up Termux config..."
+  mkdir -p ~/.termux
+  ln -sf ~/.dotfiles/termux/.termux/.current_color ~/.termux/.current_color
+  ln -sf ~/.dotfiles/termux/.termux/.current_font ~/.termux/.current_font
+  ln -sf ~/.dotfiles/termux/.termux/colors.properties ~/.termux/colors.properties
+  ln -sf ~/.dotfiles/termux/.termux/font.ttf ~/.termux/font.ttf
+  ln -sf ~/.dotfiles/termux/.termux/termux.properties ~/.termux/termux.properties
+  cp ~/.dotfiles/termux/.termux/toggle-extra-keys.sh ~/.termux/toggle-extra-keys.sh
+  chmod +x ~/.termux/toggle-extra-keys.sh
+  echo "Termux config applied!"
+""" }
+
+# Auto-detect Termux and apply config (optional - add to basic-setup if desired)
+apply-termux-if-detected = { run = """
+  if [[ "$OSTYPE" == "linux-android"* ]] || [[ -n "$TERMUX_VERSION" ]]; then
+    echo "Termux detected, applying config..."
+    mise run setup-termux
+  else
+    echo "Not on Termux, skipping"
+  fi
+""" }
