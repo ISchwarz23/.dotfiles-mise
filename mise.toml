@@ -74,9 +74,6 @@
 "apk:kubectl" = "latest"
 "zypper:kubernetes-cli" = "latest"
 
-# AUR packages (Arch only)
-"yay:tmux-xpanes" = "latest"
-
 # opencode - AI coding agent
 "pacman:opencode" = "latest"
 # Note: not in apt/dnf/apk/zypper official repos - use mise tool (mise install opencode)
