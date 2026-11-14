@@ -1,0 +1,10 @@
+# Local mise config — writable by `mise use -g`
+# Includes the shared dotfiles config (symlinked as config.general.toml)
+include = ["config.general.toml"]
+
+# Device-specific overrides go here (added by `mise use -g`, or manually)
+# [tools]
+# node = "20"
+
+# [env]
+# LOCAL_VAR = "value"

@@ -1,0 +1,47 @@
+# Mise runtime configuration — loaded on every host
+# This file is symlinked as ~/.config/mise/config.general.toml by bootstrap
+# and included by ~/.config/mise/config.toml
+
+# =============================================================================
+# SHELL ALIASES (global, via mise activation)
+# These work in both zsh and bash when mise is activated
+# =============================================================================
+[shell_alias]
+ll = "ls -la"
+gca = "git commit --amend"
+gcan = "git commit --amend --no-edit"
+glg = "git lg"
+vi = "nvim"
+gst = "git status"
+gco = "git checkout"
+gcb = "git checkout -b"
+gp = "git push"
+gpl = "git pull"
+gd = "git diff"
+gds = "git diff --staged"
+ga = "git add"
+gaa = "git add -A"
+gcm = "git commit -m"
+gcma = "git commit --amend"
+gcman = "git commit --amend --no-edit"
+grh = "git reset HEAD"
+grhh = "git reset HEAD --hard"
+gstash = "git stash"
+gstashp = "git stash pop"
+glog = "git log --oneline --graph --decorate --all"
+lg = "git lg"
+
+# =============================================================================
+# ENVIRONMENT VARIABLES
+# =============================================================================
+[env]
+
+
+# =============================================================================
+# TOOLS
+# Version managers for development tools (mise will install these)
+# =============================================================================
+[tools]
+"node" = "lts"
+"opencode" = "latest"
+# Python, Go, Rust, etc. can be added here

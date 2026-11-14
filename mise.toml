@@ -1,33 +1,6 @@
-# Mise configuration for bootstrapping this machine from these dotfiles
-
-# =============================================================================
-# SHELL ALIASES (global, via mise activation)
-# These work in both zsh and bash when mise is activated
-# =============================================================================
-[shell_alias]
-ll = "ls -la"
-gca = "git commit --amend"
-gcan = "git commit --amend --no-edit"
-glg = "git lg"
-vi = "nvim"
-gst = "git status"
-gco = "git checkout"
-gcb = "git checkout -b"
-gp = "git push"
-gpl = "git pull"
-gd = "git diff"
-gds = "git diff --staged"
-ga = "git add"
-gaa = "git add -A"
-gcm = "git commit -m"
-gcma = "git commit --amend"
-gcman = "git commit --amend --no-edit"
-grh = "git reset HEAD"
-grhh = "git reset HEAD --hard"
-gstash = "git stash"
-gstashp = "git stash pop"
-glog = "git log --oneline --graph --decorate --all"
-lg = "git lg"
+# Mise bootstrap configuration — used ONLY by `mise bootstrap --from <repo>`
+# This file is NOT loaded as mise runtime config.
+# Runtime config lives in mise/config.general.toml (symlinked to ~/.config/mise/config.general.toml)
 
 # =============================================================================
 # DOTFILES
@@ -37,6 +10,9 @@ lg = "git lg"
 [dotfiles]
 "~/.gitconfig" = { source = "git/.gitconfig", mode = "copy" }
 "~/.gitconfig-general" = { source = "git/.gitconfig-general", mode = "symlink" }
+
+"~/.config/mise/config.toml" = { source = "mise/config.toml", mode = "copy" }
+"~/.config/mise/config.general.toml" = { source = "mise/config.general.toml", mode = "symlink" }
 
 #"~/.config/nvim" = { source = "nvim/.config/nvim" }
 
@@ -118,8 +94,25 @@ lg = "git lg"
 # No static files needed - x-xpanes and kubectl are downloaded via tasks
 
 # =============================================================================
+# BOOTSTRAP SERVICES
+# Systemd/user services to enable
+# =============================================================================
+[bootstrap.services]
+# Enable dotfiles history watcher (auto-commit changes)
+mise-history = { builtin = "history-watch" }
+
+# =============================================================================
+# BOOTSTRAP SHELL ACTIVATION
+# Adds `eval "$(mise activate zsh)"` to ~/.zshrc and `eval "$(mise activate bash)"` to ~/.bashrc
+# =============================================================================
+[bootstrap.mise_shell_activate]
+zsh = true
+bash = true
+
+
+# =============================================================================
 # TASKS
-# Custom tasks for complex setup steps (run after packages/files/repos/dotfiles)
+# Custom tasks for development workflows
 # =============================================================================
 [tasks]
 # Termux (Android) config - run manually on Termux devices
@@ -146,33 +139,3 @@ lg = "git lg"
     echo "Not on Termux, skipping"
   fi
 """ }
-
-# =============================================================================
-# BOOTSTRAP SERVICES
-# Systemd/user services to enable
-# =============================================================================
-[bootstrap.services]
-# Enable dotfiles history watcher (auto-commit changes)
-mise-history = { builtin = "history-watch" }
-
-# =============================================================================
-# BOOTSTRAP SHELL ACTIVATION
-# Adds `eval "$(mise activate zsh)"` to ~/.zshrc and `eval "$(mise activate bash)"` to ~/.bashrc
-# =============================================================================
-[bootstrap.mise_shell_activate]
-zsh = true
-bash = true
-
-# =============================================================================
-# ENVIRONMENT VARIABLES
-# =============================================================================
-[env]
-
-# =============================================================================
-# TOOLS
-# Version managers for development tools (mise will install these)
-# =============================================================================
-[tools]
-"node" = "lts"
-"opencode" = "latest"
-# Python, Go, Rust, etc. can be added here
