@@ -11,8 +11,8 @@
 "~/.gitconfig" = { source = "git/.gitconfig", mode = "copy" }
 "~/.gitconfig-general" = { source = "git/.gitconfig-general", mode = "symlink" }
 
-"~/.config/mise/config.toml" = { source = "mise/config.toml", mode = "copy" }
 "~/.config/mise/config.general.toml" = { source = "mise/config.general.toml", mode = "symlink" }
+"~/.config/mise/config.toml" = { source = "mise/config.toml", mode = "copy" }
 
 #"~/.config/nvim" = { source = "nvim/.config/nvim" }
 
