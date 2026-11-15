@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+(( $# < 2 )) && echo "Usage: fip <host> <port1> [port2] ..." && exit 1
+host="$1"
+shift
+for port in "$@"; do
+    ssh -f -N -L "${port}:localhost:${port}" "$host" && echo "Forwarding localhost:$port -> $host:$port"
+done

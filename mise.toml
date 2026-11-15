@@ -16,6 +16,11 @@
 "~/.config/mise/config.toml" = { source = "mise/config.toml", mode = "copy" }
 "~/tasks.toml" = { source = "mise/tasks.toml", mode = "symlink" }
 
+# Local bin scripts (dip, lip, fip)
+"~/.local/bin/dip" = { source = "bin/dip", mode = "symlink" }
+"~/.local/bin/lip" = { source = "bin/lip", mode = "symlink" }
+"~/.local/bin/fip" = { source = "bin/fip", mode = "symlink" }
+
 #"~/.config/nvim" = { source = "nvim/.config/nvim" }
 
 "~/.config/opencode/themes/opencode-transparent.json" = { source = "opencode/.config/opencode/themes/opencode-transparent.json" }
